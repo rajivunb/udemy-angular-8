@@ -8,7 +8,16 @@ import { Component, OnInit } from '@angular/core';
 export class ServersComponent implements OnInit {
   allowNewServer = false;
   serverCreationStatus = 'No server was created!';
+  serverCreated = false;
+  showPassword = false;
   serverName = '';
+  username = '';
+  servers = [
+    'Server 1',
+    'Server 2'
+  ];
+  logDisplay = [];
+  logNumber = 1;
 
   constructor() {
     setTimeout(() => {
@@ -20,7 +29,9 @@ export class ServersComponent implements OnInit {
   }
 
   onCreateServer() {
-    this.serverCreationStatus = 'Server was created!';
+    this.serverCreationStatus = 'Server <' + this.serverName + '>was created!';
+    this.serverCreated = true;
+    this.servers.push(this.serverName);
   }
 
   onUpdateServerName(event: any) {
@@ -28,4 +39,12 @@ export class ServersComponent implements OnInit {
     this.serverName = (<HTMLInputElement>event.target).value;
   }
 
+  onResetUsername() {
+    this.username = '';
+  }
+
+  onDisplay() {
+    this.showPassword = !this.showPassword;
+    this.logDisplay.push(new Date());
+  }
 }

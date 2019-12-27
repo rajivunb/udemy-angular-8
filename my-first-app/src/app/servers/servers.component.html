@@ -1,16 +1,26 @@
 <label>Server Name</label>
-<input type="text" class="form-control" (input)="onUpdateServerName($event)" />
+<!-- <input type="text" class="form-control" (input)="onUpdateServerName($event)" /> -->
+<!-- use two-way binding -->
+<input type="text" class="form-control" [(ngModel)]="serverName" />
 
-<p>{{ serverName }}</p>
-
-<button
-  class="btn btn-primary"
-  [disabled]="!allowNewServer"
-  (click)="onCreateServer()"
->
+<button class="btn btn-primary" [disabled]="!allowNewServer" (click)="onCreateServer()">
   Add Server
 </button>
-<p>{{ serverCreationStatus }}</p>
+<p *ngIf="serverCreated">{{ serverCreationStatus }}</p>
 <!-- <p [innerHTML]="allowNewServer"></p> -->
-<app-server></app-server>
-<app-server></app-server>
+
+<app-server *ngFor="let server of servers"></app-server>
+
+<!-- AULA 34 - PRACTICING DATABINDING
+<hr>
+<label>Username</label>
+<input type="text" class="form-control" [(ngModel)]="username" />
+<button class="btn btn-danger" [disabled]="username.length === 0" (click)="onResetUsername()">Reset</button>
+<p>Username is: {{ username }}</p> -->
+
+<button class="btn btn-primary" (click)="onDisplay()">Display Details</button>
+<p *ngIf="showPassword">Secret password: tuna</p>
+<ul>
+  <li *ngFor="let logEntry of logDisplay; let i = index" [ngStyle]="{backgroundColor: i >= 4 ? 'lightblue' : 'transparent'}"
+    [ngClass]="{white: i >= 4}">{{ logEntry }}</li>
+</ul>
