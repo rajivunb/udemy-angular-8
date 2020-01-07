@@ -1,0 +1,11 @@
+<h1>Game Control</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <app-game-control (tickEvent)="onTickEvent($event)"></app-game-control>
+      <hr>
+      <app-odd *ngFor="let oddNumber of oddNumbers" [oddNumber]="oddNumber"></app-odd>
+      <app-even *ngFor="let evenNumber of evenNumbers" [evenNumber]="evenNumber"></app-even>
+    </div>
+  </div>  
+</div>
