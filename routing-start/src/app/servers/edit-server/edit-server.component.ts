@@ -31,7 +31,9 @@ export class EditServerComponent implements OnInit, CanComponentDeactivate {
       }
     );
 
-    this.server = this.serversService.getServer(1);
+    // aula 149
+    const id = +this.route.snapshot.params['id'];
+    this.server = this.serversService.getServer(id);
     this.serverName = this.server.name;
     this.serverStatus = this.server.status;
   }
