@@ -1,3 +1,4 @@
+import { ServerResolver } from './servers/server/service-resolver.service';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -17,7 +18,7 @@ const appRoutes: Routes = [
     { path: ':id/:name', component: UserComponent }
   ]},
   { path: 'servers', canActivateChild: [AuthGuard], component: ServersComponent, children: [
-      { path: ':id', component: ServerComponent },
+      { path: ':id', component: ServerComponent, resolve: {server: ServerResolver} },
       { path: ':id/edit', component: EditServerComponent, canDeactivate: [CanDeactivateGuard] }
   ]},
   // { path: 'not-found', component: PageNotFoundComponent },
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(appRoutes)
+    // RouterModule.forRoot(appRoutes, {useHash: true})
   ],
   exports: [RouterModule]
 })
