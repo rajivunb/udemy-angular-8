@@ -32,4 +32,12 @@ export class RecipeService {
   sendIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shoppingListService.addIngredients(ingredients);
   }
+
+  getRecipe(id: number) {
+    if (this.recipes[id]) {
+      return this.recipes[id];
+    } else {
+      return null;
+    }
+  }
 }
