@@ -49,4 +49,30 @@
       </form>
     </div>
   </div>
+  <hr>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form [formGroup]="taskForm" (ngSubmit)="onTaskSubmit()">
+        <div class="form-group">
+          <label for="project-name">Project Name:</label>
+          <input type="text" formControlName="projectName" id="project-name" name="project-name" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="task-email">E-mail:</label>
+          <input type="text" formControlName="taskEmail" id="task-email" name="task-email" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="status">Status:</label>
+          <select formControlName="status" id="status" name="status" class="form-control">
+            <option value="stable">stable</option>
+            <option value="critical">critical</option>
+            <option value="finished">finished</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+      </form>
+    </div>
 </div>

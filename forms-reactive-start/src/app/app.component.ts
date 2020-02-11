@@ -10,7 +10,9 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   genders = ['male', 'female'];
   signupForm: FormGroup;
+  taskForm: FormGroup;
   forbiddenUsernames = ['Chris', 'Anna'];
+  forbiddenProjNames = ['Test', 'test'];
 
   ngOnInit() {
     this.signupForm = new FormGroup({
@@ -20,6 +22,12 @@ export class AppComponent implements OnInit {
       }),
       'gender': new FormControl('male'),
       'hobbies': new FormArray([])
+    });
+
+    this.taskForm = new FormGroup({
+      'projectName': new FormControl(null, [Validators.required, this.forbiddenProjectNames.bind(this)]),
+      'taskEmail': new FormControl(null, [Validators.required, Validators.email]),
+      'status': new FormControl('stable')
     });
 
     // this.signupForm.valueChanges.subscribe((value) => {
@@ -43,6 +51,10 @@ export class AppComponent implements OnInit {
     console.log(this.signupForm);
   }
 
+  onTaskSubmit() {
+    console.log(this.taskForm);
+  }
+
   onAddHobby() {
     const control = new FormControl(null, Validators.required);
     (<FormArray>this.signupForm.get('hobbies')).push(control);
@@ -50,6 +62,14 @@ export class AppComponent implements OnInit {
 
   getHobbyControls() {
     return (<FormArray>this.signupForm.get('hobbies')).controls;
+  }
+
+  forbiddenProjectNames(control: FormControl): {[s: string]: boolean} {
+    if (this.forbiddenProjNames.indexOf(control.value) !== -1) {
+      return {'projectNameIsForbidden': true};
+    }
+
+    return null;
   }
 
   forbiddenNames(control: FormControl): {[s: string]: boolean} {
