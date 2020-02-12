@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray, ControlContainer } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +25,8 @@ export class AppComponent implements OnInit {
     });
 
     this.taskForm = new FormGroup({
-      'projectName': new FormControl(null, [Validators.required, this.forbiddenProjectNames.bind(this)]),
+      // 'projectName': new FormControl(null, [Validators.required, this.forbiddenProjectNames.bind(this)]),
+      'projectName': new FormControl(null, [Validators.required], this.forbiddenAsyncProjectNames.bind(this)),
       'taskEmail': new FormControl(null, [Validators.required, Validators.email]),
       'status': new FormControl('stable')
     });
@@ -70,6 +71,20 @@ export class AppComponent implements OnInit {
     }
 
     return null;
+  }
+
+  forbiddenAsyncProjectNames(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        if (this.forbiddenProjNames.indexOf(control.value) !== -1) {
+          resolve({'projectNameIsForbidden': true});
+        } else {
+          resolve(null);
+        }
+      }, 1500);
+    });
+
+    return promise;
   }
 
   forbiddenNames(control: FormControl): {[s: string]: boolean} {
